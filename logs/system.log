@@ -1,0 +1,18 @@
+2024/07/31 20:24:46 Server listening on :8080
+2024/07/31 20:30:29 Server listening on :8080
+2024/07/31 21:01:07 Failed to ping database: dial tcp [::1]:3306: connect: connection refused
+2024/07/31 21:01:25 Failed to ping database: dial tcp [::1]:3306: connect: connection refused
+2024/07/31 21:03:39 Server listening on :8080
+2024/07/31 21:06:33 Server listening on :8080
+2024/08/03 16:31:49 Migration 001_create_users_table.sql applied successfully
+2024/08/03 16:31:49 Server listening on :8080
+2024/08/03 16:37:23 Failed to run migrations: failed to run migration 001_create_users_table.sql: Error 1050 (42S01): Table 'users' already exists
+2024/08/03 16:38:41 Failed to run migrations: failed to run migration 001_create_users_table.sql: Error 1050 (42S01): Table 'users' already exists
+2024/08/03 16:39:00 Migration 001_create_users_table.sql applied successfully
+2024/08/03 16:39:00 Server listening on :8080
+2024/08/03 16:39:04 Migration 001_create_users_table.sql already applied, skipping
+2024/08/03 16:39:04 Server listening on :8080
+2024/08/03 16:39:07 Migration 001_create_users_table.sql already applied, skipping
+2024/08/03 16:39:07 Server listening on :8080
+2024/08/03 16:44:41 Migration 001_create_users_table.sql already applied, skipping
+2024/08/03 16:44:41 Server listening on :8080

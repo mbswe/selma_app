@@ -1,0 +1,18 @@
+{
+    "mode": "development",
+    "server_port": 8080,
+    "database": {
+        "host": "localhost",
+        "port": 3306,
+        "username": "root",
+        "password": "root",
+        "database": "selma"
+    },
+    "logging": {
+        "middleware": "middleware.log",
+        "system": "system.log",
+        "debug": "debug.log",
+        "error": "error.log",
+        "info": "info.log"
+    }
+}

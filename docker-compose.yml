@@ -1,0 +1,21 @@
+version: '3.8'
+
+services:
+  selma_db:
+    image: mysql:8.0
+    container_name: selma_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: selma
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      interval: 5s
+      timeout: 2s
+      retries: 3
+
+volumes:
+  db_data:
