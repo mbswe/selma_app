@@ -3,7 +3,8 @@ package controllers
 import (
 	"SelmaApp/models"
 	"encoding/json"
-	"gorm.io/gorm"
+	"github.com/gorilla/mux"
+	"github.com/mbswe/selma"
 	"log"
 	"net/http"
 	"time"
@@ -11,13 +12,13 @@ import (
 
 // UserController handles user-related requests
 type UserController struct {
-	DB *gorm.DB
+	App *selma.App
 }
 
 // NewUserController creates a new UserController instance
-func NewUserController(db *gorm.DB) *UserController {
+func NewUserController(app *selma.App) *UserController {
 	return &UserController{
-		DB: db,
+		App: app,
 	}
 }
 
@@ -41,7 +42,7 @@ func (uc *UserController) SaveUser(w http.ResponseWriter, r *http.Request) {
 	user.UpdatedAt = currentTime
 
 	// Save user to the database using GORM
-	if err := uc.DB.Save(&user).Error; err != nil {
+	if err := uc.App.DB.Save(&user).Error; err != nil {
 		http.Error(w, "Failed to save user", http.StatusInternalServerError)
 		log.Printf("Failed to save user: %v", err)
 		return
@@ -49,4 +50,27 @@ func (uc *UserController) SaveUser(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusCreated)
 	w.Write([]byte("User created successfully"))
+}
+
+// GetUser retrieves a user by ID
+func (uc *UserController) GetUser(w http.ResponseWriter, r *http.Request) {
+	// Extract the user ID from the URL path
+	vars := mux.Vars(r)
+	id := vars["id"]
+	if id == "" {
+		http.Error(w, "Missing user ID", http.StatusBadRequest)
+		return
+	}
+
+	// Find the user in the database
+	var user models.User
+	if err := uc.App.DB.First(&user, id).Error; err != nil {
+		http.Error(w, "Failed to find user", http.StatusNotFound)
+		log.Printf("Failed to find user: %v", err)
+		return
+	}
+
+	// Return the user as JSON
+	w.Header().Set("Content-Type", "application/json")
+	json.NewEncoder(w).Encode(user)
 }

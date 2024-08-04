@@ -14,11 +14,14 @@ func main() {
 	app.RunMigrations(&models.User{})
 
 	homeController := controllers.NewHomeController(app)
-	userController := controllers.NewUserController(app.DB)
+	userController := controllers.NewUserController(app)
 
-	app.Router.Get("/", homeController.ShowIndex, selmaMiddleware.LoggingMiddleware(app))
-	// app.Router.Get("/user", userController.GetUser, selmaMiddleware.LoggingMiddleware(app), appMiddleware.CustomMiddleware(app) /*, selmaMiddleware.AuthMiddleware(app)*/)
-	app.Router.Post("/user", userController.SaveUser, selmaMiddleware.LoggingMiddleware(app), appMiddleware.CustomMiddleware(app) /*, selmaMiddleware.AuthMiddleware(app)*/)
+	app.Router.HandleFunc("/", homeController.ShowIndex).Methods("GET")
+	app.Router.HandleFunc("/user/{id}", userController.GetUser).Methods("GET")
+	app.Router.HandleFunc("/user", userController.SaveUser).Methods("POST")
+
+	app.Router.Use(selmaMiddleware.LoggingMiddleware(app))
+	app.Router.Use(appMiddleware.CustomMiddleware(app))
 
 	app.StartServer()
 }
