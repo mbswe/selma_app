@@ -72,5 +72,8 @@ func (uc *UserController) GetUser(w http.ResponseWriter, r *http.Request) {
 
 	// Return the user as JSON
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(user)
+	err := json.NewEncoder(w).Encode(user)
+	if err != nil {
+		return
+	}
 }
