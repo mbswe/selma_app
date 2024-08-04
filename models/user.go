@@ -1,21 +1,15 @@
 package models
 
 import (
-	"github.com/mbswe/selma/model"
+	"time"
 )
 
 // User represents a user in the system
 type User struct {
-	model.ModelBase
-	Name  string
-	Email string
-}
-
-// NewUser creates a new User instance
-func NewUser(id int, name, email string) *User {
-	return &User{
-		ModelBase: model.ModelBase{ID: id},
-		Name:      name,
-		Email:     email,
-	}
+	ID        int    `gorm:"primaryKey"`
+	Email     string `gorm:"unique;not null"`
+	Username  string `gorm:"unique;not null"`
+	Password  string `gorm:"not null"`
+	CreatedAt time.Time
+	UpdatedAt time.Time
 }
